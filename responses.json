@@ -1,0 +1,73 @@
+{
+    "verifyUser": {
+        "success": true,
+        "userId": "JonasEUR",
+        "userCat": "VIP;WEEB;",
+        "firstName": "Hugo",
+        "lastName": "Chavez",
+        "dob": "1981-01-01",
+        "email": "example@example.com",
+        "street": "Pluggvägen 14",
+        "city": "Tyresö",
+        "zip": "13551",
+        "country": "SWE",
+        "locale": "en_EN",
+        "balance": "123561",
+        "balanceCy": "EUR",
+        "sex": "MALE",
+        "attributes": {
+            "boleeanPaam": false,
+            "intPram": 123,
+            "stringParam": "test"
+        },
+        "kycStatus": "accept"
+    },
+    "lookupUser": {
+        "success": true,
+        "userId": "1",
+        "usercat": "Jedi",
+        "firstName": "Hugo",
+        "lastName": "Chavez",
+        "dob": "1981-01-01",
+        "email": "example@example.com",
+        "street": "Pluggvägen 14",
+        "city": "Tyresö",
+        "zip": "13551",
+        "country": "SWE",
+        "locale": "en_EN",
+        "balance": "123561",
+        "balanceCy": "EUR",
+        "sex": "MALE",
+        "attributes": {
+            "isCool": false
+        },
+        "kycStatus": "accept"
+    },
+    "authorize": {
+        "userId": "1",
+        "success": true,
+        "merchantTxId": "",
+        "errCode": "001",
+        "errMsg": "testErr",
+        "authCode": "1e6890326341edf6db0ec10cc159128fb",
+        "attributes": {
+            "merchantId": "merchant123",
+            "mcc": "7555"
+            
+        }
+    },
+    "transfer": {
+        "userId": "1",
+        "success": true,
+        "merchantTxId": ""
+    },
+    "cancel": {
+        "userId": "1",
+        "success": true,
+        "errCode": "You suck, why can't you do a proper tx noob"
+    },
+    "signIn": {
+        "userId": "JonasEUR",
+        "success": true
+    }
+}
