@@ -7,7 +7,7 @@ function App() {
     verifyUser: {},
     authorize: {},
     transfer: {},
-    cancel: {},
+    cancel: {},h
   });
 
   const handleChangeInput = (field, value) => {
