@@ -1,0 +1,64 @@
+{
+    "verifyUser": {
+        "userId": "0xd0c7a269df090352795cf96dd10ba7d033b18f1d",
+        "success": true,
+        "kycStatus": "Approved",
+        "firstName": "John",
+        "lastName": "Doe",
+        "city": "Istanbul",
+        "country": "TUR",
+        "email": "yetik@decentral.games",
+        "dob": "1911-11-10",
+        "balance": 100.5,
+        "balanceCy": "USD",
+        "locale": "en_TR"
+    },
+    "lookupUser": {
+        "success": true,
+        "userId": "1",
+        "usercat": "Jedi",
+        "firstName": "Hugo",
+        "lastName": "Chavez",
+        "dob": "1981-01-01",
+        "email": "example@example.com",
+        "street": "Pluggvägen 14",
+        "city": "Tyresö",
+        "zip": "13551",
+        "country": "SWE",
+        "locale": "en_EN",
+        "balance": "123561",
+        "balanceCy": "EUR",
+        "sex": "MALE",
+        "attributes": {
+            "isCool": false
+        },
+        "kycStatus": "accept"
+    },
+    "authorize": {
+        "userId": "1",
+        "success": true,
+        "merchantTxId": "",
+        "errCode": "001",
+        "errMsg": "testErr",
+        "authCode": "1e6890326341edf6db0ec10cc159128fb",
+        "attributes": {
+            "merchantId": "merchant123",
+            "mcc": "7555"
+            
+        }
+    },
+    "transfer": {
+        "userId": "1",
+        "success": true,
+        "merchantTxId": ""
+    },
+    "cancel": {
+        "userId": "1",
+        "success": true,
+        "errCode": "You suck, why can't you do a proper tx noob"
+    },
+    "signIn": {
+        "userId": "JonasEUR",
+        "success": true
+    }
+}
