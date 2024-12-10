@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import VerifyUser from './responses/VerifyUser';
 
 function App() {
+  const [responses, setResponses] = useState({
+    verifyUser: {},
+    authorize: {},
+    transfer: {},
+    cancel: {},
+  });
+
+  const handleChangeInput = (field, value) => {
+    setResponses((prevState) => ({
+      ...prevState,
+      verifyUser: {
+        ...prevState.verifyUser,
+        [field]: value,
+      },
+    }));
+  };
+
+  const responseUrl = "http://localhost:5000/api/responses";
+  useEffect(() => {
+    fetch(responseUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setResponses(data);
+      });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <VerifyUser
+        verifyUser={responses.verifyUser}
+        onInputChange={handleChangeInput}
+      />
+      <button
+        onClick={console.log("Hello")}
+      >
+        SAVE
+      </button>
     </div>
   );
 }
