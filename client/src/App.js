@@ -25,7 +25,7 @@ function App() {
     fetch(responseUrl)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setResponses(data);
       });
   }, []);
@@ -37,9 +37,9 @@ function App() {
         onInputChange={handleChangeInput}
       />
       <button
-        onClick={console.log("Hello")}
+        onClick={() => console.log("Hello Express")}
       >
-        SAVE
+        Save
       </button>
     </div>
   );
