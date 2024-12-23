@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import VerifyUser from "./responses/VerifyUser";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true); // You might change this state as per your authentication logic
+  const [loggedIn, setLoggedIn] = useState(true);
   const [responses, setResponses] = useState({
     verifyUser: {},
     authorize: {},
@@ -13,7 +13,6 @@ function App() {
     cancel: {},
   });
 
-  // Fetch data once when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,9 +24,8 @@ function App() {
       }
     };
     fetchData();
-  }, []); // Empty dependency array means it runs only once when the component mounts
+  }, []);
 
-  // Handle input change for the verifyUser data
   const handleChangeInput = (field, value) => {
     setResponses((prevState) => ({
       ...prevState,
@@ -38,15 +36,6 @@ function App() {
     }));
   };
 
-  // ProtectedRoute logic for controlling access
-  // const ProtectedRoute = ({ children }) => {
-  //   if (!loggedIn) {
-  //     return <Navigate to="/login" />;
-  //   }
-  //   return <>{children}</>;
-  // };
-
-  // Memoized ProtectedRoute to avoid re-renders
   const ProtectedRoute = useMemo(
     () =>
       function ProtectedRoute({ children }) {
