@@ -15,7 +15,6 @@ function App() {
 
   // Fetch data once when the component mounts
   useEffect(() => {
-    console.log("useEffect ran");
     const fetchData = async () => {
       try {
         const res = await fetch("http://localhost:5000/api/responses");
@@ -52,9 +51,9 @@ function App() {
     () =>
       function ProtectedRoute({ children }) {
         if (!loggedIn) {
-          return <Navigate to="/login" replace />;
+          return <Navigate to="/login" />;
         }
-        return <>{children}</>;
+        return children;
       },
     [loggedIn]
   );
