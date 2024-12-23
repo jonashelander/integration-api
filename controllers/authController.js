@@ -18,7 +18,6 @@ const mockUser = {
 
 const login = (req, res) => {
   const { username, password } = req.body;
-  console.log(req.authorization);
 
   if (username === mockUser.username && password === mockUser.password) {
     const token = jwt.sign(

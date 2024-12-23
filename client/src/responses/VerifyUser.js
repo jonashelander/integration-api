@@ -1,15 +1,15 @@
 import React from "react";
 
-function VerifyUser({ verifyUser, onInputChange }) {
+const VerifyUser = React.memo(({ verifyUser, onInputChange }) => {
   return (
     <div>
-      <h2>Verifyuser</h2>
+      <h2>Verify User</h2>
       {Object.keys(verifyUser).map((key) => (
         <div key={key}>
           <p>{key}</p>
           <input
             type="text"
-            value={verifyUser[key]}
+            value={verifyUser[key] || ""}
             placeholder={key}
             onChange={(e) => onInputChange(key, e.target.value)}
           />
@@ -17,6 +17,6 @@ function VerifyUser({ verifyUser, onInputChange }) {
       ))}
     </div>
   );
-}
+});
 
 export default VerifyUser;
