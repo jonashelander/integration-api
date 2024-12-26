@@ -4,9 +4,12 @@
 
 //Fetch user data request
 export const fetchData = async (token) => {
-  if (!token) {
-    throw new Error("No token provided");
-  }
+  try {
+    if (!token) {
+      console.error("No token provided")
+    }
+
+  } catch (err) { console.error("No token providedqwer") }
 
   try {
     const res = await fetch("http://localhost:5000/api/responses", {
@@ -19,9 +22,9 @@ export const fetchData = async (token) => {
 
     if (!res.ok) {
       if (res.status === 401) {
-        throw new Error("Unauthorized: Invalid or expired token");
+        console.error("Unauthorized: Invalid or expired token")
       }
-      throw new Error("Failed to fetch data");
+      console.error("Unauthorized: Invalid or expired token")
     }
 
     const data = await res.json();
@@ -29,7 +32,7 @@ export const fetchData = async (token) => {
   } catch (err) {
     console.error(
       "Error fetching data: ",
-      err.message + "öalksdflöasdkjsödklf"
+      err.message
     );
     throw err; // Rethrow the error to handle it in the calling component
   }

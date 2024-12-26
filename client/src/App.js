@@ -6,7 +6,7 @@ import VerifyUser from "./responses/VerifyUser";
 import { fetchData } from "./services/authService";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [responses, setResponses] = useState({
     verifyUser: {},
     authorize: {},
@@ -16,9 +16,9 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      fetchData(localStorage.getItem("token")).then((res) => {
-        setResponses(res);
-      });
+        fetchData(localStorage.getItem("token")).then((res) => {
+          setResponses(res);
+        });
     }
   }, []);
 
@@ -69,7 +69,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/login" element={<Login />} />
           <Route
             path="/"
             element={
