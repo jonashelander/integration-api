@@ -4,7 +4,6 @@ const SECRET_KEY = "supersecretkey";
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  console.log(req.headers);
 
   if (!authHeader) {
     return res.status(401).json({ message: "No token provided" });

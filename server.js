@@ -31,7 +31,7 @@ app.get("/protected", authenticateToken, (req, res) => {
   });
 });
 
-app.post("/api/verifyUser", (req, res) => {
+app.post("/api/verifyUser", authenticateToken, (req, res) => {
   console.log(req);
   res.set("Content-Type", "application/json; charset=utf-8");
   res.json(responses.verifyUser);
@@ -53,7 +53,7 @@ app.get("/api/signIn", (req, res) => {
   res.json(responses.signIn);
 });
 
-app.get("/api/responses", (req, res) => {
+app.get("/api/responses", authenticateToken, (req, res) => {
   res.json(responses);
 });
 

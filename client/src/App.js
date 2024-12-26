@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
 import VerifyUser from "./responses/VerifyUser";
+import { fetchData } from "./services/authService";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [responses, setResponses] = useState({
     verifyUser: {},
     authorize: {},
@@ -14,16 +15,11 @@ function App() {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/responses");
-        const data = await res.json();
-        setResponses(data);
-      } catch (err) {
-        console.error("Error fetching data: ", err);
-      }
-    };
-    fetchData();
+    if (loggedIn) {
+      fetchData(localStorage.getItem("token")).then((res) => {
+        setResponses(res);
+      });
+    }
   }, []);
 
   const handleChangeInput = (field, value) => {
@@ -34,6 +30,28 @@ function App() {
         [field]: value,
       },
     }));
+  };
+
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      console.log("Logged in successfully:", data);
+
+      // Save the token (or any other data) to localStorage or state
+      localStorage.setItem("token", data.token);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const ProtectedRoute = useMemo(
@@ -51,7 +69,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route
             path="/"
             element={
