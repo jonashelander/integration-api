@@ -5,7 +5,6 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
-    console.log("submit");
     e.preventDefault();
     onLogin(username, password);
   };

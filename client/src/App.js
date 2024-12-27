@@ -3,10 +3,13 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
 import VerifyUser from "./responses/VerifyUser";
-import { fetchData } from "./services/authService";
+import { fetchData, validateToken } from "./services/authService";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import GuestRoute from "./routes/GuestRoute";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
+  const [validToken, setValidToken] = useState(false);
   const [responses, setResponses] = useState({
     verifyUser: {},
     authorize: {},
@@ -15,12 +18,38 @@ function App() {
   });
 
   useEffect(() => {
+    const validateAndFetchData = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        console.error("No token found in localStorage.");
+        return;
+      }
+
+      try {
+        // Validate the token
+        const res = await validateToken(token);
+        console.log(res);
+        setValidToken(res.success);
+
+        // If token is valid, fetch the data
+        if (res.success) {
+          const data = await fetchData(token);
+          setResponses(data);
+        }
+      } catch (err) {
+        console.error(
+          "Error during token validation or data fetching:",
+          err.message
+        );
+      }
+    };
+
+    // Call the async function inside useEffect
     if (loggedIn) {
-        fetchData(localStorage.getItem("token")).then((res) => {
-          setResponses(res);
-        });
+      validateAndFetchData();
     }
-  }, []);
+  }, [loggedIn]);
 
   const handleChangeInput = (field, value) => {
     setResponses((prevState) => ({
@@ -54,26 +83,22 @@ function App() {
     }
   };
 
-  const ProtectedRoute = useMemo(
-    () =>
-      function ProtectedRoute({ children }) {
-        if (!loggedIn) {
-          return <Navigate to="/login" />;
-        }
-        return children;
-      },
-    [loggedIn]
-  );
-
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/login"
+            element={
+              <GuestRoute loggedIn={loggedIn} validToken={validToken}>
+                <Login />
+              </GuestRoute>
+            }
+          />
           <Route
             path="/"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute loggedIn={loggedIn} validToken={validToken}>
                 <VerifyUser
                   verifyUser={responses.verifyUser}
                   onInputChange={handleChangeInput}

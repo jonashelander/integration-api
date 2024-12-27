@@ -24,15 +24,15 @@ app.use(cors()); // Enable CORS for all routes
 // Define endpoints
 app.post("/login", login);
 
-app.get("/protected", authenticateToken, (req, res) => {
+app.get("/auth", authenticateToken, (req, res) => {
   res.json({
-    message: "This is a protected route",
-    user: req.user,
+    message: "The token is valid",
+    success: true,
+    //user: req.user,
   });
 });
 
 app.post("/api/verifyUser", authenticateToken, (req, res) => {
-  console.log(req);
   res.set("Content-Type", "application/json; charset=utf-8");
   res.json(responses.verifyUser);
 });

@@ -16,7 +16,7 @@ const authenticateToken = (req, res, next) => {
 
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: "Invalid token" });
+      return res.status(403).json({ message: "Invalid token", sucess: false });
     }
     req.user = decoded; // Attach decoded user info to the request
     next(); // Proceed to the next route handler
