@@ -1,6 +1,39 @@
-// Login request
+// Login
+export const handleLogin = async (username, password) => {
+  try {
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
-//Authorization request
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error("Invalid username or password");
+      }
+      throw new Error(`Login failed with status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Assuming the backend responds with a token
+    if (data.token) {
+      localStorage.setItem("token", data.token); // Save the token in localStorage
+      
+      return { success: true, token: data.token }; // Return success status and the token
+    } else {
+      throw new Error("Login successful, but no token provided in the response");
+    }
+  } catch (error) {
+    console.error("Error during login:", error.message);
+    return { success: false, error: error.message }; // Return failure status and error message
+  }
+};
+
+
+//Auth Token
 export const validateToken = async (token) => {
   if (!token) {
     console.error("No token provided");
@@ -33,44 +66,44 @@ export const validateToken = async (token) => {
   }
 };
 
-// export const validateToken = async (token) => {
-//   if (!token) {
-//     console.warn("No token provided");
-//     return { valid: false, message: "No token provided" };
-//   }
+/* export const validateToken = async (token) => {
+  if (!token) {
+    console.warn("No token provided");
+    return { valid: false, message: "No token provided" };
+  }
 
-//   try {
-//     const response = await fetch("http://localhost:5000/auth", {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
+  try {
+    const response = await fetch("http://localhost:5000/auth", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-//     // Handle response errors
-//     if (!response.ok) {
-//       if (response.status === 401) {
-//         console.warn("Unauthorized: Invalid or expired token");
-//         return { valid: false, message: "Invalid or expired token" };
-//       }
-//       console.error(`HTTP error: ${response.status}`);
-//       return { valid: false, message: `HTTP error: ${response.status}` };
-//     }
+    // Handle response errors
+    if (!response.ok) {
+      if (response.status === 401) {
+        console.warn("Unauthorized: Invalid or expired token");
+        return { valid: false, message: "Invalid or expired token" };
+      }
+      console.error(`HTTP error: ${response.status}`);
+      return { valid: false, message: `HTTP error: ${response.status}` };
+    }
 
-//     // Parse response JSON
-//     const data = await response.json();
-//     return { valid: true, user: data.user }; // Assuming the user info is included in the response
-//   } catch (error) {
-//     console.error("Error validating token: ", error.message);
-//     return {
-//       valid: false,
-//       message: "An error occurred while validating the token",
-//     };
-//   }
-// };
+    // Parse response JSON
+    const data = await response.json();
+    return { valid: true, user: data.user }; // Assuming the user info is included in the response
+  } catch (error) {
+    console.error("Error validating token: ", error.message);
+    return {
+      valid: false,
+      message: "An error occurred while validating the token",
+    };
+  }
+}; */
 
-//Fetch user data request
+//Fetch user data
 export const fetchData = async (token) => {
   try {
     if (!token) {
